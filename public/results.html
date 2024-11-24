@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Results</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Add the CDN link for Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            animation: backgroundMove 10s linear infinite; /* Apply the moving background */
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        /* Animation for the moving background */
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Style for the moving background */
+        body {
+            background: linear-gradient(45deg, #ff6a00, #ffcc00, #00b3ff, #00ff66);
+            background-size: 400% 400%; /* Ensures the gradient is big enough to move */
+            animation: backgroundMove 10s ease infinite;
+        }
+
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1e3a5f;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover {
+            background-color: #1c2f47;
+        }
+
+        .poll-result {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Poll Results</h1>
+
+    <!-- Container for displaying poll charts -->
+    <div id="pollResults"></div>
+
+    <!-- Go Back Button -->
+    <button class="back-btn" onclick="window.location.href='/'">Go Back to Poll Creation</button>
+
+    <script>
+        const socket = io();
+
+        // Function to generate a random color in hex format
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        socket.on('polls', (polls) => {
+            const pollResultsContainer = document.getElementById('pollResults');
+            pollResultsContainer.innerHTML = ''; // Clear existing results
+
+            // Iterate over each poll in the received data
+            for (const pollId in polls) {
+                const poll = polls[pollId];
+
+                // Get poll question and choices
+                const question = poll.question;
+                const choices = poll.choices;
+                const totalVotes = poll.totalVotes;
+
+                if (totalVotes > 0) {
+                    const labels = choices.map(choice => choice.option);
+                    const data = choices.map(choice => choice.votes);
+
+                    // Generate random colors for each choice
+                    const backgroundColors = data.map(() => getRandomColor());
+                    const borderColors = backgroundColors.map(color => color);
+
+                    // Create a unique container for each poll's results
+                    const pollResultDiv = document.createElement('div');
+                    pollResultDiv.classList.add('poll-result');
+                    pollResultDiv.innerHTML = `<h2>${question}</h2>`;
+
+                    // Create a canvas for the chart
+                    const canvas = document.createElement('canvas');
+                    pollResultDiv.appendChild(canvas);
+                    pollResultsContainer.appendChild(pollResultDiv);
+
+                    // Set up chart data
+                    const chartData = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Votes',
+                            data: data,
+                            backgroundColor: backgroundColors,  // Random colors for bars
+                            borderColor: backgroundColors,      // Same colors for borders
+                            borderWidth: 1,
+                            hoverBackgroundColor: backgroundColors, // Hover effect
+                            hoverBorderColor: backgroundColors,
+                        }]
+                    };
+
+                    // Get the context of the canvas
+                    const ctx = canvas.getContext('2d');
+
+                    // Create the chart
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 1
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Poll Choices'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
