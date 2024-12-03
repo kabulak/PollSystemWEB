@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Justine\\RealTimePoll\\backend\\CSharpSocketClient\\CSharpSocketClient.csproj": {}
+    "C:\\Users\\Justine\\RealTimePoll\\backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Justine\\RealTimePoll\\backend\\CSharpSocketClient\\CSharpSocketClient.csproj": {
+    "C:\\Users\\Justine\\RealTimePoll\\backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Justine\\RealTimePoll\\backend\\CSharpSocketClient\\CSharpSocketClient.csproj",
-        "projectName": "CSharpSocketClient",
-        "projectPath": "C:\\Users\\Justine\\RealTimePoll\\backend\\CSharpSocketClient\\CSharpSocketClient.csproj",
+        "projectUniqueName": "C:\\Users\\Justine\\RealTimePoll\\backend\\Backend.csproj",
+        "projectName": "Backend",
+        "projectPath": "C:\\Users\\Justine\\RealTimePoll\\backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\Justine\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Justine\\RealTimePoll\\backend\\CSharpSocketClient\\obj\\",
+        "outputPath": "C:\\Users\\Justine\\RealTimePoll\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,6 +67,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

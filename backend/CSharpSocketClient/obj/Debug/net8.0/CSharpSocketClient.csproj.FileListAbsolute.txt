@@ -1,5 +1,0 @@
-C:\Users\Justine\RealTimePoll\backend\CSharpSocketClient\obj\Debug\net8.0\CSharpSocketClient.csproj.AssemblyReference.cache
-C:\Users\Justine\RealTimePoll\backend\CSharpSocketClient\obj\Debug\net8.0\CSharpSocketClient.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Justine\RealTimePoll\backend\CSharpSocketClient\obj\Debug\net8.0\CSharpSocketClient.AssemblyInfoInputs.cache
-C:\Users\Justine\RealTimePoll\backend\CSharpSocketClient\obj\Debug\net8.0\CSharpSocketClient.AssemblyInfo.cs
-C:\Users\Justine\RealTimePoll\backend\CSharpSocketClient\obj\Debug\net8.0\CSharpSocketClient.csproj.CoreCompileInputs.cache
